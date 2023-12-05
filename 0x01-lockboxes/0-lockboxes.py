@@ -1,18 +1,18 @@
 #!/usr/bin/python3
 """
-This module defines a function to address the lockboxes algorithm problem.
+This module contains a function to solve the lockboxes algorrithm problem
 """
 
 
 def canUnlockAll(boxes):
     """
-    Determines whether all the boxes can be opened.
+    Determines if all the boxes can be opened
 
     Args:
-        boxes (list): A list of boxes.
+        boxes (list): list of boxes
 
-    Returns:
-        (bool) True if all boxes can be opened, False otherwise.
+    Return:
+        (bool) True if all boxes can be opened, false otherwise
     """
     if not boxes or len(boxes) == 1:
         return True
