@@ -1,31 +1,40 @@
 #!/usr/bin/python3
+"""
+This module contains a function to solve the lockboxes algorrithm problem
+"""
+
 
 def canUnlockAll(boxes):
     """
-    Determine if all the boxes can be opened.
+    Determines if all the boxes can be opened
 
     Args:
-    - boxes (list of lists): Each box is numbered sequentially from 0 to n - 1
-      and may contain keys to the other boxes.
+        boxes (list): list of boxes
 
-    Returns:
-    - bool: True if all boxes can be opened, False otherwise.
+    Return:
+        (bool) True if all boxes can be opened, false otherwise
     """
+    if not boxes or len(boxes) == 1:
+        return True
 
-    if not boxes or not boxes[0]:
-        return False
+    current_box = 0
+    boxes_keys = {}
+    next_box = True
 
-    n = len(boxes)
-    visited = [False] * n
-    visited[0] = True
-    stack = [0]
-
-    while stack:
-        current_box = stack.pop()
-
+    while next_box:
+        boxes_keys[current_box] = True
         for key in boxes[current_box]:
-            if 0 <= key < n and not visited[key]:
-                visited[key] = True
-                stack.append(key)
+            if key not in boxes_keys.keys():
+                boxes_keys[key] = False
 
-    return all(visited)
+        if len(boxes_keys) == len(boxes):
+            return True
+
+        next_box = False
+        for key, unlocked in boxes_keys.items():
+            if (not unlocked) and (key < len(boxes) and key >= 0):
+                next_box = True
+                current_box = key
+                break
+
+    return False
