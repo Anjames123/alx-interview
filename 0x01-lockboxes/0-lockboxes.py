@@ -17,24 +17,16 @@ def canUnlockAll(boxes):
     if not boxes or len(boxes) == 1:
         return True
 
-    current_box = 0
-    boxes_keys = {}
-    next_box = True
+    total_boxes = len(boxes)
+    visited_boxes = set()
+    stack = [0]  # Start with the first box
 
-    while next_box:
-        boxes_keys[current_box] = True
+    while stack:
+        current_box = stack.pop()
+        visited_boxes.add(current_box)
+
         for key in boxes[current_box]:
-            if key not in boxes_keys.keys():
-                boxes_keys[key] = False
+            if key not in visited_boxes and 0 <= key < total_boxes:
+                stack.append(key)
 
-        if len(boxes_keys) == len(boxes):
-            return True
-
-        next_box = False
-        for key, unlocked in boxes_keys.items():
-            if (not unlocked) and (key < len(boxes) and key >= 0):
-                next_box = True
-                current_box = key
-                break
-
-    return False
+    return len(visited_boxes) == total_boxes
